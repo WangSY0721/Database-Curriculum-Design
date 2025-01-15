@@ -1,4 +1,4 @@
-# 今日头条todayHead
+# 数据课程设计——今日头条todayHead
 
 ## 软件架构
 * 编程语言: Java(JDK21)
