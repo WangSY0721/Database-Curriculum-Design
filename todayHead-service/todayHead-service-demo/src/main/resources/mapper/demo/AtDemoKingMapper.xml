@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.demo.mapper.AtDemoKingMapper">
+    <!-- resultMap -->
+    <resultMap id="resultMap" type="com.wang.demo.pojo.AtDemoKing">
+        <!-- 关联字段要额外赋值 -->
+        <result column="dynastyId" property="dynastyId"/>
+        <!-- 多对一 -->
+        <association property="dynasty" column="dynastyId" javaType="com.wang.demo.pojo.AtDemoDynasty"
+            select="com.wang.demo.mapper.AtDemoDynastyMapper.findRelaOne"/>
+    </resultMap>
+
+    <!-- 查询多条记录 -->
+    <select id="findList" parameterType="com.wang.demo.pojo.AtDemoKingQuery" resultMap="resultMap">
+        select * from at_demo_king
+        <where>
+            <!-- 关键字查询 -->
+            <!-- 关键字 -->
+            <if test="param.keyword != null and param.keyword != ''">
+                and (name like #{param.keyword} or content like #{param.keyword})
+            </if>
+            <!-- 关键字 -->
+            <if test="param.keyword != null and param.keyword != ''">
+                and (name like #{param.keyword} or content like #{param.keyword})
+            </if>
+            <!-- dynastyId -->
+            <if test="param.entity.dynastyId != null and param.entity.dynastyId != ''">
+                and dynastyId = #{param.entity.dynastyId}
+            </if>
+            <!-- 状态 -->
+            <if test="param.entity.status != null and param.entity.status != ''">
+                and status = #{param.entity.status}
+            </if>
+            <!-- 删除状态 -->
+            <if test="param.entity.delFlag != null and param.entity.delFlag != ''">
+                and delFlag = #{param.entity.delFlag}
+            </if>
+            <!-- 时间范围 -->
+            <if test="param.pubTimeSt instanceof java.util.Date and param.pubTimeEd instanceof java.util.Date">
+                <![CDATA[
+                    and pubTime >= #{param.pubTimeSt} and pubTime < #{param.pubTimeEd}
+                ]]>
+            </if>
+        </where>
+        <!-- 排序 -->
+        <choose>
+            <when test="param.orderBy == 'idAsc'">
+                order by id asc
+            </when>
+            <otherwise>
+                order by pubTime desc
+            </otherwise>
+        </choose>
+    </select>
+    <!-- 查询单条记录 -->
+    <select id="findOne" resultMap="resultMap">
+        select * from at_demo_king
+        <where>
+            <!-- id -->
+            <if test="param.entity.id != null and param.entity.id != ''">
+                and id = #{param.entity.id}
+            </if>
+        </where>
+    </select>
+
+    <!-- 删除操作 -->
+    <delete id="deleteBatch">
+        delete from at_demo_king
+        <where>
+            <!-- 状态 -->
+            <if test="param.entity.id != null">
+                and id = #{param.entity.id}
+            </if>
+        </where>
+
+        <choose>
+            <when test="param.entity.id != null">
+                <!-- 肯定有id的条件 -->
+            </when>
+            <otherwise>
+                limit 0
+            </otherwise>
+        </choose>
+    </delete>
+
+    <!-- 批量更新 -->
+    <update id="updateBatch" parameterType="com.wang.demo.pojo.AtDemoKingQuery" >
+        update at_demo_king
+        <set>
+            <choose>
+                <when test="param.operType == 1">
+                    <!-- 还原数据 -->
+                    delFlag = #{param.entity.delFlag},
+                </when>
+            </choose>
+        </set>
+        <where>
+            <if test="param.entity.id != null">
+                and id = #{param.entity.id}
+            </if>
+        </where>
+    </update>
+</mapper>

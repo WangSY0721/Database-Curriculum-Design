@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.wang</groupId>
+        <artifactId>todayHead</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>todayHead-web</artifactId>
+    <!-- 项目类型:pom -->
+    <packaging>pom</packaging>
+    <description>今日头条(用户)(所有模块的web代码)</description>
+    <modules>
+        <module>todayHead-web-head</module>
+    </modules>
+    <build>
+        <plugins>
+            <!-- 打一个可以直接运行的jar包,建议放到web项目中 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

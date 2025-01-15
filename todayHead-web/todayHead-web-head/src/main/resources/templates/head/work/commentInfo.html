@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>评论列表 - 今日头条(用户)</title>
+    <meta th:replace="~{/head/head_include ::  title}"/>
+</head>
+<body>
+<meta th:replace="~{/head/head_include ::  header}"/>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-1 main">
+            <h2 class="col-sm-10 col-sm-offset-1 form-signin-heading text-center">查看评论</h2>
+            <div class="form-group row">
+                <label for="email" class="col-sm-2 control-label">Id</label>
+                <div class="col-sm-8">
+                    <span th:text="${one?.id }"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-sm-2 col-form-label">作品:</label>
+                <div class="col-sm-8">
+                    <span th:text="${one.work?.name}"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-sm-2 col-form-label">标题:</label>
+                <div class="col-sm-8">
+                    <span th:text="${one.name}"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-sm-2 col-form-label">创建时间:</label>
+                <div class="col-sm-8">
+                    <span th:text="${#dates.format(one.createTime,'yyyy-MM-dd HH:mm:ss')}"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-sm-2 col-form-label">内容:</label>
+                <div class="col-sm-8">
+                    [(${one?.content})]
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<meta th:replace="~{/head/head_include ::  footer}"/>
+</body>
+</html>

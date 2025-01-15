@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.wang</groupId>
+        <artifactId>todayHead</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>todayHead-common</artifactId>
+    <!-- 项目类型:pom -->
+    <packaging>pom</packaging>
+    <description>今日头条(用户)(所有模块的公共代码)</description>
+    <!-- 子模块 -->
+    <modules>
+        <module>todayHead-common-service</module>
+        <module>todayHead-common-util</module>
+        <module>todayHead-common-web</module>
+    </modules>
+
+</project>

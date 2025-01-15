@@ -1,0 +1,24 @@
+server:
+  # 端口号;
+  port: 10002
+  servlet:
+    # 项目名
+    context-path: /todayHead-web-head
+spring:
+  profiles:
+    # 开发环境
+    active: dev
+# MybatisPlus相关的配置
+mybatis-plus:
+  configuration:
+    # 数据库的列名和java的属性名一致
+    map-underscore-to-camel-case: false
+    # 延迟加载
+    # aggressive-lazy-loading: false
+    lazy-loading-enabled: true
+  global-config:
+    db-config:
+      logic-delete-field: delFlag
+logging:
+  level:
+    'com.wang': debug

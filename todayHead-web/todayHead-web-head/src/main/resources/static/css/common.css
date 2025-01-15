@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+.err_info {
+    font-weight: bold;
+    color: red;
+    font-size: 16px;
+}
+
+.href_info {
+    color: blue;
+}
+
+.dropdown-menu{
+    left: -55px;
+}
+
+.bg-light {
+    background-color: #FD5958!important;
+}

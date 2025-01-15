@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- 属性配置,maven项目中的常量 -->
+    <properties>
+        <!-- jdk版本源码 -->
+        <maven.compiler.source>21</maven.compiler.source>
+        <!-- jdk版本目标 -->
+        <maven.compiler.target>21</maven.compiler.target>
+        <!-- 编译版本 -->
+        <maven.compiler.compilerVersion>21</maven.compiler.compilerVersion>
+        <!-- 项目的编码集 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- 是否跳转java docs 文档;true:跳转,false:不跳过 -->
+        <javadoc.skip>false</javadoc.skip>
+    </properties>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.5</version>
+        <relativePath/>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 父项目的groupId;公司的域名倒过来写 -->
+    <groupId>com.wang</groupId>
+    <!-- 项目名,一个公司可以做多个项目 -->
+    <artifactId>todayHead</artifactId>
+    <!-- 一个项目一般统一维护一个版本号 -->
+    <version>1.0-SNAPSHOT</version>
+    <!-- 项目类型(pom) -->
+    <packaging>pom</packaging>
+    <!-- 描述 -->
+    <description>今日头条(用户)(父项目)</description>
+    <!--子模块-->
+    <modules>
+        <module>todayHead-common</module>
+        <module>todayHead-service</module>
+        <module>todayHead-web</module>
+    </modules>
+    <!-- 依赖管理器:不想在子项目中写版本号 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- 相关工具的依赖 -->
+            <!-- SpringBoot没有 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.5.9</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-jsqlparser</artifactId>
+                <version>3.5.9</version>
+            </dependency>
+            <dependency>
+                <artifactId>mybatis-spring</artifactId>
+                <groupId>org.mybatis</groupId>
+                <version>3.0.4</version>
+            </dependency>
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>3.9.1</version>
+            </dependency>
+            <!-- fastjson -->
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>2.0.53</version>
+            </dependency>
+            <!-- 百度编辑器 -->
+            <dependency>
+                <groupId>com.gitee.qdbp.thirdparty</groupId>
+                <artifactId>ueditor</artifactId>
+                <version>1.4.3.6</version>
+            </dependency>
+            <!-- jsoup -->
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>1.18.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>4.4.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- 依赖包(父项目的) -->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+    <!-- 构建环境 -->
+    <build>
+        <plugins>
+            <!-- 运行的时候(打包)跳过测试执行所有test目录下面的代码 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <!-- 因为父项目中有 -->
+                <!--<version>3.2.2</version>-->
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <!-- 将源代码打包,打成一个jar包 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <!-- 源码打一个jar包 -->
+                <configuration>
+                    <!-- 附件 -->
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <!-- 执行 -->
+                    <execution>
+                        <!-- 阶段 -->
+                        <phase>compile</phase>
+                        <!-- 目标 -->
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 设置配置文件的编码 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- 版本管理插件 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <configuration>
+                    <generateBackupPoms>false</generateBackupPoms>
+                </configuration>
+            </plugin>
+
+            <!-- 生成java docs文档 -->
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <skip>${javadoc.skip}</skip>
+                    <encoding>UTF-8</encoding>
+                    <charset>UTF-8</charset>
+                    <docencoding>UTF-8</docencoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
+        </plugins>
+    </build>
+</project>

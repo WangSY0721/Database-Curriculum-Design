@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.users.mapper.AtWorkMapper">
+    <resultMap id="resultMap" type="com.wang.users.pojo.AtWork">
+        <!-- 关联关系 -->
+        <result column="usersId" property="usersId"/>
+        <association property="users" column="usersId" javaType="com.wang.users.pojo.AtUsersDesc"
+                     select="com.wang.users.mapper.AtUsersDescMapper.findRelaOne"/>
+    </resultMap>
+    <!-- 查询多条记录 -->
+    <select id="findList" parameterType="com.wang.users.pojo.AtWorkQuery" resultMap="resultMap">
+        select * from at_work
+        <where>
+            <!-- 关键字查询 -->
+            <!-- 关键字 -->
+            <if test="param.keyword != null and param.keyword != ''">
+                and (name like #{param.keyword} or content like #{param.keyword})
+            </if>
+            <!-- 状态 -->
+            <if test="param.entity.status != null and param.entity.status != ''">
+                and status = #{param.entity.status}
+            </if>
+            <!-- 删除状态 -->
+            <if test="param.entity.delFlag != null and param.entity.delFlag != ''">
+                and delFlag = #{param.entity.delFlag}
+            </if>
+            <!-- 时间范围 -->
+            <if test="param.pubTimeSt instanceof java.util.Date and param.pubTimeEd instanceof java.util.Date">
+                <![CDATA[
+                    and pubTime >= #{param.pubTimeSt} and pubTime < #{param.pubTimeEd}
+                ]]>
+            </if>
+            <!-- usersId -->
+            <if test="param.entity.usersId != null and param.entity.usersId != ''">
+                and usersId = #{param.entity.usersId}
+            </if>
+        </where>
+        <!-- 排序 -->
+        <choose>
+            <when test="param.orderBy == 'idAsc'">
+                order by id asc
+            </when>
+            <otherwise>
+                order by pubTime desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 查询单个对象 -->
+    <select id="findOne" resultMap="resultMap">
+        select * from at_work
+        <where>
+            <!-- id -->
+            <if test="param.entity.id != null and param.entity.id != ''">
+                and id = #{param.entity.id}
+            </if>
+        </where>
+    </select>
+
+    <!-- 删除操作 -->
+    <delete id="deleteBatch">
+        delete from at_work
+        <where>
+            <!-- 状态 -->
+            <if test="param.entity.id != null">
+                and id = #{param.entity.id}
+            </if>
+        </where>
+
+        <choose>
+            <when test="param.entity.id != null">
+                <!-- 肯定有id的条件 -->
+            </when>
+            <otherwise>
+                limit 0
+            </otherwise>
+        </choose>
+    </delete>
+
+    <!-- 查询单条记录(关联关系) -->
+    <select id="findRelaOne" resultMap="resultMap">
+        select * from at_work where id = #{dynastyId}
+    </select>
+
+    <!-- 批量更新 -->
+    <update id="updateBatch" parameterType="com.wang.users.pojo.AtWorkQuery" >
+        update at_work
+        <set>
+            <choose>
+                <when test="param.operType == 1">
+                    <!-- 还原数据 -->
+                    delFlag = #{param.entity.delFlag},
+                </when>
+            </choose>
+        </set>
+        <where>
+            <if test="param.entity.id != null">
+                and id = #{param.entity.id}
+            </if>
+        </where>
+    </update>
+</mapper>

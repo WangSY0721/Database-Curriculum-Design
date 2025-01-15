@@ -1,0 +1,18 @@
+# 配置开发环境的相关信息;(只存储开发环境,演示环境,配置不一样的内容)
+spring:
+  # 数据库的相关信息
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///todayHead
+    username: root
+    password: 123456
+  # thymeleaf的相关配置
+  thymeleaf:
+    # 关闭缓存
+    cache: false
+  # redis相关信息
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: tmkj@zgb123
