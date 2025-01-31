@@ -2,10 +2,10 @@
 
 ## 软件架构
 * 编程语言: Java(JDK21)
-* 数据库: Mysql8
+* 数据库: MySQL8
 * 开发工具: Idea
 * Maven
-* 框架: SpringBoot + SSM + Mybatis-Plus + Thymeleaf
+* 框架: SpringBoot + SSM + MyBatis-Plus + Thymeleaf
 
 ## 系统需求
 
